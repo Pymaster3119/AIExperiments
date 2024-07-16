@@ -59,21 +59,22 @@ learning_rate = 0.5
 
 
 for batch in range(100):
-    for i in range(1000):
-        y_int = random.random() * 200 - 100
-        inputx=random.random() * 100
-        inputy=random.random() * 100 * slope
-        neuronvalues = [inputx, inputy, y_int]
-        value = 0
-        for x in range(neuronCount):
-            value += weights[x] * neuronvalues[x] + bias
-        value = min(max(0,round(value)), 1)
-        above = False
-        if(value > 0.5):
-            above = True
-        
-        truth = 1 if inputy > (slope * inputx) + y_int else 0
-        points.append(point(inputx, inputy, above, truth==1))
+    for i in range(10):
+        for j in range(100):
+            y_int = random.random() * 400 - 200
+            inputx=random.random() * 100
+            inputy=random.random() * 100 * slope
+            neuronvalues = [inputx, inputy, y_int]
+            value = 0
+            for x in range(neuronCount):
+                value += weights[x] * neuronvalues[x] + bias
+            value = min(max(0,value), 1)
+            above = False
+            if(value > 0.5):
+                above = True
+            
+            truth = 1 if inputy > (slope * inputx) + y_int else 0
+            points.append(point(inputx, inputy, above, truth==1))
         error = truth - value
         for x in range(neuronCount):
             weights[x] = weights[x] + learning_rate * error * neuronvalues[x]
@@ -81,6 +82,6 @@ for batch in range(100):
     plot()
     save_model()
     points = []
-    learning_rate = pow(0.99,batch + 5)
+    learning_rate = pow(0.9,batch + 5)
     print("Batch " + str(batch) + " Learning Rate " + str(learning_rate))
 print(bestlayer)

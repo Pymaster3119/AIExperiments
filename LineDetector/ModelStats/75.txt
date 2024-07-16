@@ -1,5 +1,5 @@
-True Negatives: 495
-False Negatives: 0
-True Positives: 504
+True Negatives: 525
+False Negatives: 2
+True Positives: 472
 False Positives: 1
-Accuracy: 0.999
+Accuracy: 0.997
