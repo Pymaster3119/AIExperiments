@@ -2,11 +2,14 @@ import tkinter
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+from matplotlib.figure import Figure 
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,  
+NavigationToolbar2Tk) 
 main = tkinter.Tk()
 frame = tkinter.Frame(main)
 frame.pack()
 yint = tkinter.IntVar(frame)
-slider = tkinter.Scale(frame, variable=yint, from_=-10, to=10, orient="horizontal")
+slider = tkinter.Scale(frame, variable=yint, from_=-100, to=100, orient="horizontal")
 slider.grid(row=1, column=0)
 selected = tkinter.StringVar(frame)
 options = [x for x in range(100)]
@@ -41,18 +44,23 @@ def create_points(numPoints):
         truth = 1 if inputy > (5 * inputx) + yint.get() else 0
         points.append(point(inputx, inputy, above))
 def draw(a,b,c):
-    global draw, selected, yint,points
+    global draw, selected, yint,points, canvas
+    fig = Figure(figsize = (5, 5), dpi = 100)
+    axes1 = fig.add_axes([0.1,0.1,0.9,0.9])
+    axes1.set_ylim(0, 500)
+    axes1.set_xlim(0, 100)
     create_points(1000)
     plt.clf()
     for x in points:
-        xpoints = np.array([x.x])
-        ypoints = np.array([x.y])
-        plt.plot(xpoints,ypoints, "o", color = "red" if x.classification else "black")
+        axes1.plot(x.x, x.y, "o",color = "red" if x.classification else "black")
     xpoints = np.array([0,100])
     ypoints = np.array([yint.get(),yint.get()+(5 * 100)])
     points = []
-    plt.plot(xpoints, ypoints)
-    plt.show()
+    axes1.plot(xpoints, ypoints)
+    canvas = FigureCanvasTkAgg(fig,  master = frame)
+    canvas.draw()
+    canvas.get_tk_widget().grid(row=0, column=0)
 selected.trace_add("write", draw)
+yint.trace_add("write", draw)
 selected.set("0")
 main.mainloop()

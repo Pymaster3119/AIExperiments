@@ -60,7 +60,7 @@ learning_rate = 0.5
 
 for batch in range(100):
     for i in range(1000):
-        y_int = random.random() * 20 - 10
+        y_int = random.random() * 200 - 100
         inputx=random.random() * 100
         inputy=random.random() * 100 * slope
         neuronvalues = [inputx, inputy, y_int]
