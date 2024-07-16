@@ -12,7 +12,7 @@ class point:
         self.y = y
         self.classification = classification
 
-#Black - Under, Red - Over
+
 def plot():
     global points
     plt.clf()
