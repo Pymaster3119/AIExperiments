@@ -17,7 +17,7 @@ dropdown = tkinter.OptionMenu(frame, selected, *options)
 dropdown.grid(row=1, column=1)
 canvas = tkinter.Canvas(frame, width=1000, height=1000)
 canvas.grid(row=0, column=0, columnspan=2)
-button = tkinter.Button(frame, text="Make a large batch", command= lambda :create_points(1000))
+button = tkinter.Button(frame, text="Make a large batch", command= lambda :create_points(1000,runDraw=True))
 button.grid(row=1, column=2)
 points = []
 class point:
@@ -25,7 +25,7 @@ class point:
         self.x = x
         self.y = y
         self.classification = classification
-def create_points(numPoints):
+def create_points(numPoints, runDraw = False):
     for x in range(numPoints):
         inputx=random.random() * 100
         inputy=random.random() * 500
@@ -41,6 +41,8 @@ def create_points(numPoints):
             value += weights[x] * neuronvalues[x] + bias
         value = min(max(0,value), 1)
         points.append(point(inputx, inputy, (value-0.5) * 2))
+    if runDraw:
+        draw(0,0,"FLAG")
 def lerp(c2, time):
     r = int(c2[0] * (time))
     g = int(c2[1] * (time))
@@ -52,7 +54,8 @@ def draw(a,b,c):
     axes1 = fig.add_axes([0.1,0.1,0.9,0.9])
     axes1.set_ylim(0, 500)
     axes1.set_xlim(0, 100)
-    create_points(100)
+    if (c != "FLAG"):
+        create_points(100, False)
     plt.clf()
     for x in points:
         if(x.classification > 0):
