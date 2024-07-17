@@ -62,6 +62,10 @@ def create_visualizer():
     canvas = FigureCanvasTkAgg(fig,  master = frame)
     canvas.draw()
     canvas.get_tk_widget().grid(row=0, column=0)
+def create_point():
+    global points, pointx, pointy
+    points.append((float(pointx.get()),float(pointy.get())))
+
 matrixa = tkinter.StringVar(frame, "1")
 matrixb = tkinter.StringVar(frame, "0")
 matrixc = tkinter.StringVar(frame, "0")
@@ -72,5 +76,10 @@ tkinter.Entry(frame, textvariable=matrixc).grid(row=2,column=0)
 tkinter.Entry(frame, textvariable=matrixd).grid(row=2,column=1)
 tkinter.Button(frame, text="Create plot", command=create_visualizer).grid(row=3, column=0)
 tkinter.Button(frame, text="Create square", command=generate_square_points).grid(row = 3, column=1)
+pointx = tkinter.StringVar(frame)
+pointy = tkinter.StringVar(frame)
+tkinter.Entry(frame, textvariable=pointx).grid(row=4, column=0)
+tkinter.Entry(frame, textvariable=pointy).grid(row=4, column=1)
+tkinter.Button(frame, text="create point", command=create_point).grid(row=5, column=0)
 create_visualizer()
 root.mainloop()
