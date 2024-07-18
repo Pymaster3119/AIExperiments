@@ -2,7 +2,9 @@ import tkinter
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure 
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,  NavigationToolbar2Tk) 
+from matplotlib.image import imread
 import numpy
+from tkinter.filedialog import askopenfilename
 root = tkinter.Tk()
 frame = tkinter.Frame(root)
 frame.pack()
@@ -58,14 +60,45 @@ def create_visualizer():
         point = [point[0] * float(matrixa.get()) + point[1] * float(matrixb.get()), point[0] * float(matrixc.get()) + point[1] * float(matrixd.get())]
         xpoints = numpy.array([point[0]])
         ypoints = numpy.array([point[1]])
-        axes1.plot(xpoints, ypoints, "o", color = "red")
+        if(len(p) != 2):
+            axes1.plot(xpoints, ypoints, "o", color = p[2])
+        else:
+            axes1.plot(xpoints, ypoints, "o", color = "red")
     canvas = FigureCanvasTkAgg(fig,  master = frame)
     canvas.draw()
     canvas.get_tk_widget().grid(row=0, column=0)
 def create_point():
     global points, pointx, pointy
     points.append((float(pointx.get()),float(pointy.get())))
+def import_image():
+    global points, imageFrom, imageTo
+    filename = askopenfilename()
+    image = imread(filename)
+    delta = float(imageTo.get()) - float(imageFrom.get())
 
+    prevx = float('inf')
+    prevy = float('-inf')
+    xcount = 0
+    ycount = 0
+    for i in range(image.shape[0]):
+        x = float(imageTo.get())-(i / image.shape[0]) * delta 
+        if (abs(prevx-x) > 0.1):
+            prevx = x
+            xcount+= 1
+            prevy = float('-inf')
+            ycount = 0
+            for j in range(image.shape[1]):
+                y = (j / image.shape[1]) * delta + float(imageFrom.get())
+                if (y - prevy > 0.1):
+                    prevy = y
+                    ycount += 1
+                    r, g, b = image[i][j][:3] / 255.0
+                    points.append((y, x, (r, g, b), "            "))
+    print(points)
+            
+    
+def delete_points():
+    points = []
 matrixa = tkinter.StringVar(frame, "1")
 matrixb = tkinter.StringVar(frame, "0")
 matrixc = tkinter.StringVar(frame, "0")
@@ -89,5 +122,13 @@ tkinter.Label(frame, text = "Graph from").grid(row=7, column=0)
 tkinter.Label(frame, text = "Graph to").grid(row=7, column=1)
 tkinter.Entry(frame, textvariable=graphFrom).grid(row=8, column=0)
 tkinter.Entry(frame, textvariable=graphTo).grid(row=8, column=1)
+imageFrom = tkinter.StringVar(frame, "0")
+imageTo = tkinter.StringVar(frame, "50")
+tkinter.Label(frame, text = "Image from").grid(row=9, column=0)
+tkinter.Label(frame, text = "Image to").grid(row=9, column=1)
+tkinter.Entry(frame, textvariable=imageFrom).grid(row=10, column=0)
+tkinter.Entry(frame, textvariable=imageTo).grid(row=10, column=1)
+tkinter.Button(frame, text= "import image", command=import_image).grid(row=11, column=0)
+tkinter.Button(frame, text= "delete all points", command=delete_points).grid(row=11, column=1)
 create_visualizer()
 root.mainloop()
