@@ -40,7 +40,10 @@ def getQR():
     global Q, R
     #Calculate Q
     for i in matrixvars:
-        length = findlength(i, True)
+        a = i
+        for j in Q:
+            currterm = dot(i, j)
+        length = findlength(a, True)
         Q.append([])
         for j in i:
             Q[len(Q)-1].append(tkinter.StringVar())
@@ -62,6 +65,15 @@ def dot(i, j):
     for x in range(len(i)):
         out +=float(i[x].get()) * float(j[x].get())
     return out
+
+def subtract(v1, v2, gets = True):
+    output = []
+    for i in range(len(v1)):
+        if gets:
+            output.append(float(v1[i].get())-float(v2[i].get()))
+        else:
+            output.append(v1[i]-v2[i])
+    return output
 
 matrixWidth = tkinter.StringVar()
 matrixHeight = tkinter.StringVar()
