@@ -14,22 +14,33 @@ points = []
 def generate_square_points():
     global points, status
     status.set("Status: creating square...")
-
-    # Generate points for the bottom side of the square
     for x in range(20,31):
         points.append((x, 20))
-
-    # Generate points for the right side of the square
     for y in range(20,31):
         points.append((30, y))
-
-    # Generate points for the top side of the square
     for x in range(30, 19, -1):
         points.append((x, 30))
-
-    # Generate points for the left side of the square
     for y in range(30,19, -1):
         points.append((20, y))
+    status.set("Status: idle")
+def generate_triangle_points():
+    global points, status
+    status.set("Status: creating square...")
+    for x in range(20,31):
+        points.append((x, 20))
+    for y in range(20,31):
+        points.append((30 - ((y-20)/2), y))
+    for y in range(30,19, -1):
+        points.append((20 + ((y-20)/2), y))
+    status.set("Status: idle")
+
+def generate_plus_points():
+    global points, status
+    status.set("Status: creating square...")
+    for x in range(20,31):
+        points.append((x, 25))
+    for y in range(20,31):
+        points.append((25, y))
     status.set("Status: idle")
 
 def create_visualizer():
@@ -116,31 +127,33 @@ tkinter.Entry(frame, textvariable=matrixc).grid(row=2,column=0)
 tkinter.Entry(frame, textvariable=matrixd).grid(row=2,column=1)
 tkinter.Button(frame, text="Create plot", command=lambda:root.after(1, create_visualizer)).grid(row=3, column=0)
 tkinter.Button(frame, text="Create square", command=lambda:root.after(1, generate_square_points)).grid(row = 3, column=1)
+tkinter.Button(frame, text="Create triangle", command=lambda:root.after(1, generate_triangle_points)).grid(row = 4, column=0)
+tkinter.Button(frame, text="Create plus", command=lambda:root.after(1, generate_plus_points)).grid(row = 4, column=1)
 pointx = tkinter.StringVar(frame)
 pointy = tkinter.StringVar(frame)
-tkinter.Label(frame, text = "Point X").grid(row=4, column=0)
-tkinter.Label(frame, text = "Point Y").grid(row=4, column=1)
-tkinter.Entry(frame, textvariable=pointx).grid(row=5, column=0)
-tkinter.Entry(frame, textvariable=pointy).grid(row=5, column=1)
-tkinter.Button(frame, text="create point", command=lambda:root.after(1, create_point)).grid(row=6, column=0)
+tkinter.Label(frame, text = "Point X").grid(row=5, column=0)
+tkinter.Label(frame, text = "Point Y").grid(row=5, column=1)
+tkinter.Entry(frame, textvariable=pointx).grid(row=6, column=0)
+tkinter.Entry(frame, textvariable=pointy).grid(row=6, column=1)
+tkinter.Button(frame, text="create point", command=lambda:root.after(1, create_point)).grid(row=7, column=0)
 graphFrom = tkinter.StringVar(frame, "0")
 graphTo = tkinter.StringVar(frame, "50")
-tkinter.Label(frame, text = "Graph from").grid(row=7, column=0)
-tkinter.Label(frame, text = "Graph to").grid(row=7, column=1)
-tkinter.Entry(frame, textvariable=graphFrom).grid(row=8, column=0)
-tkinter.Entry(frame, textvariable=graphTo).grid(row=8, column=1)
+tkinter.Label(frame, text = "Graph from").grid(row=8, column=0)
+tkinter.Label(frame, text = "Graph to").grid(row=8, column=1)
+tkinter.Entry(frame, textvariable=graphFrom).grid(row=9, column=0)
+tkinter.Entry(frame, textvariable=graphTo).grid(row=9, column=1)
 imageFromX = tkinter.StringVar(frame, "0")
 imageToX = tkinter.StringVar(frame, "50")
 imageFromY = tkinter.StringVar(frame, "0")
 imageToY = tkinter.StringVar(frame, "50")
-tkinter.Label(frame, text = "Image from (x,y)").grid(row=9, column=0)
-tkinter.Label(frame, text = "Image to (x,y)").grid(row=9, column=1)
-tkinter.Entry(frame, textvariable=imageFromY).grid(row=10, column=0)
-tkinter.Entry(frame, textvariable=imageToY).grid(row=10, column=1)
-tkinter.Entry(frame, textvariable=imageFromX).grid(row=11, column=0)
-tkinter.Entry(frame, textvariable=imageToX).grid(row=11, column=1)
-tkinter.Button(frame, text= "import image", command=lambda:root.after(1, import_image)).grid(row=12, column=0)
-tkinter.Button(frame, text= "delete all points", command=lambda:root.after(1, delete_points)).grid(row=12, column=1)
+tkinter.Label(frame, text = "Image from (x,y)").grid(row=10, column=0)
+tkinter.Label(frame, text = "Image to (x,y)").grid(row=10, column=1)
+tkinter.Entry(frame, textvariable=imageFromY).grid(row=11, column=0)
+tkinter.Entry(frame, textvariable=imageToY).grid(row=11, column=1)
+tkinter.Entry(frame, textvariable=imageFromX).grid(row=12, column=0)
+tkinter.Entry(frame, textvariable=imageToX).grid(row=12, column=1)
+tkinter.Button(frame, text= "import image", command=lambda:root.after(1, import_image)).grid(row=13, column=0)
+tkinter.Button(frame, text= "delete all points", command=lambda:root.after(1, delete_points)).grid(row=13, column=1)
 #tkinter.Label(frame, textvariable=status).grid(row=0, column=1)
 create_visualizer()
 root.mainloop()
