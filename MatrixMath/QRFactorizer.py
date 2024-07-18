@@ -40,28 +40,11 @@ def getQR():
     global Q, R
     #Calculate Q
     for i in matrixvars:
-        if matrixvars.index(i) != 0:
-            prev = dot(i, Q[matrixvars.index(i)-1])
-            prevmatrix = []
-            for j in i:
-                prevmatrix.append(float(Q[matrixvars.index(i)-1][i.index(j)].get()) * prev)
-            for j in i:
-                prevmatrix[i.index(j)] = float(j.get()) * prevmatrix[i.index(j)]
-            print(prevmatrix)
-            for j in range(len(prevmatrix)):
-                prevmatrix[j] = float(i[j].get()) - prevmatrix[j]
-            print(prevmatrix)
-            length = findlength(prevmatrix, False)
-            Q.append([])
-            for j in i:
-                Q[len(Q)-1].append(tkinter.StringVar())
-                Q[len(Q)-1][len(Q[len(Q)-1])-1].set(str(float(j.get())/length))
-        else:
-            length = findlength(i, True)
-            Q.append([])
-            for j in i:
-                Q[len(Q)-1].append(tkinter.StringVar())
-                Q[len(Q)-1][len(Q[len(Q)-1])-1].set(str(float(j.get())/length))
+        length = findlength(i, True)
+        Q.append([])
+        for j in i:
+            Q[len(Q)-1].append(tkinter.StringVar())
+            Q[len(Q)-1][len(Q[len(Q)-1])-1].set(str(float(j.get())/length))
     draw_second_window(reassignVars=False)
     
 def findlength(i, get):
