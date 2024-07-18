@@ -42,10 +42,12 @@ def getQR():
     for i in matrixvars:
         if matrixvars.index(i) != 0:
             prev = dot(i, Q[matrixvars.index(i)-1])
-            prev *= findlength(Q[matrixvars.index(i)-1], True)
             prevmatrix = []
             for j in i:
-                prevmatrix.append(float(j.get()) * prev)
+                prevmatrix.append(float(Q[matrixvars.index(i)-1][i.index(j)].get()) * prev)
+            for j in i:
+                prevmatrix[i.index(j)] = float(j.get()) * prevmatrix[i.index(j)]
+            print(prevmatrix)
             for j in range(len(prevmatrix)):
                 prevmatrix[j] = float(i[j].get()) - prevmatrix[j]
             print(prevmatrix)
