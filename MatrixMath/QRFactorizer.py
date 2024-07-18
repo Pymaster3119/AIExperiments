@@ -43,7 +43,14 @@ def getQR():
         a = i
         for j in Q:
             currterm = dot(i, j)
-        length = findlength(a, True)
+            currterm = multiply(currterm, j)
+            a = subtract(i, currterm,gets=False)
+        if (len(Q) == 0):
+            out = []
+            for j in a:
+                out.append(float(j.get()))
+            a=out
+        length = findlength(a, False)
         Q.append([])
         for j in i:
             Q[len(Q)-1].append(tkinter.StringVar())
@@ -72,9 +79,15 @@ def subtract(v1, v2, gets = True):
         if gets:
             output.append(float(v1[i].get())-float(v2[i].get()))
         else:
-            output.append(v1[i]-v2[i])
+            output.append(float(v1[i].get())-v2[i])
     return output
 
+def multiply(const, v2):
+    output = []
+    for i in range(len(v2)):
+        output.append(const * float(v2[i].get()))
+
+    return output
 matrixWidth = tkinter.StringVar()
 matrixHeight = tkinter.StringVar()
 draw_first_window()
