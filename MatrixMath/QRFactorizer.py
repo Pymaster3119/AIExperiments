@@ -1,6 +1,7 @@
 import tkinter
 import math
 root = tkinter.Tk()
+
 frame = tkinter.Frame(root)
 frame.pack()
 matrixvars = []
@@ -31,16 +32,17 @@ def draw_second_window(reassignVars = True):
             if(reassignVars):
                 matrixvars[i].append(tkinter.StringVar(frame))
             tkinter.Entry(frame, textvariable=matrixvars[i][j]).grid(row=j + 1, column=i)
-    tkinter.Button(frame, text="Calculate QR Factorization", command= getQR).grid(row=int(matrixHeight.get())+2, column=0)
-    tkinter.Label(frame, text="Q: ").grid(row=int(matrixHeight.get())+3, column=0)
+    tkinter.Button(frame, text="Calculate QR Factorization", command= getQR).grid(row=int(matrixWidth.get())+2, column=0)
+    tkinter.Button(frame, text="Remake Matrix", command= draw_first_window).grid(row=int(matrixWidth.get())+2, column=1)
+    tkinter.Label(frame, text="Q: ").grid(row=int(matrixWidth.get())+3, column=0)
     for j in range(len(Q)):
         for i in range(len(Q[j])):
-            tkinter.Label(frame, textvariable=Q[j][i]).grid(row = i + int(matrixHeight.get())+ 4, column= j)
+            tkinter.Label(frame, textvariable=Q[j][i]).grid(row = i + int(matrixWidth.get())+ 4, column= j)
 
-    tkinter.Label(frame, text="R: ").grid(row=len(Q) + int(matrixHeight.get())+ 5, column=0)
+    tkinter.Label(frame, text="R: ").grid(row=len(Q) + int(matrixWidth.get())+ 5, column=0)
     for j in range(len(R)):
         for i in range(len(R[j])):
-            tkinter.Label(frame, textvariable=R[j][i]).grid(row = i + len(Q) + int(matrixHeight.get())+ 6, column= j)
+            tkinter.Label(frame, textvariable=R[j][i]).grid(row = i + len(Q) + int(matrixWidth.get())+ 6, column= j)
 
 def getQR():
     global Q, R
@@ -50,8 +52,7 @@ def getQR():
         for j in Q:
             currterm = dot(i, j)
             currterm = multiply(currterm, j)
-            print(currterm)
-            a = subtract(i, currterm,gets=False)
+            a = subtract(a, currterm,gets=False)
         if (len(Q) == 0):
             out = []
             for j in a:
@@ -92,13 +93,16 @@ def dot(i, j):
         out +=float(i[x].get()) * float(j[x].get())
     return out
 
-def subtract(v1, v2, gets = True):
+def subtract(v1, v2, gets = True,override = False):
     output = []
     for i in range(len(v1)):
         if gets:
             output.append(float(v1[i].get())-float(v2[i].get()))
         else:
-            output.append(float(v1[i].get())-v2[i])
+            if type(v1[i])==type(tkinter.StringVar()):
+                output.append(float(v1[i].get())-v2[i])
+            else:
+                output.append(v1[i]-v2[i])
     return output
 
 def multiply(const, v2):
