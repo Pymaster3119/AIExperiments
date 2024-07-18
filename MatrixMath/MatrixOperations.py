@@ -1,8 +1,10 @@
 import tkinter
-
 root = tkinter.Tk()
+
 frame = tkinter.Frame(root)
 frame.pack()
+h = tkinter.Scrollbar(frame, orient = 'horizontal')
+h.pack(side = tkinter.BOTTOM, fill = "y")
 matrix1 = []
 matrix2 = []
 outputmatrix = []
@@ -23,6 +25,8 @@ def draw_second_window(regenVars = True):
     global matrix1, matrix2
     for child in frame.winfo_children():
         child.destroy()
+   
+
     tkinter.Label(frame, text="Matrix 1:").grid(row=0, column=0)
     for j in range(int(matrix1height.get())):
         if regenVars:
@@ -41,6 +45,9 @@ def draw_second_window(regenVars = True):
             tkinter.Entry(frame, textvariable=matrix2[j][i]).grid(row = i + int(matrix1width.get()) + 2, column= j)
     tkinter.Button(frame, text="Add Matrices", command=add).grid(row =  int(matrix2width.get()) + int(matrix1width.get()) + 3, column=0)
     tkinter.Button(frame, text="Subtract Matrices", command=subtract).grid(row =  int(matrix2width.get()) + int(matrix1width.get()) + 3, column=1)
+    tkinter.Button(frame, text="Multiply Matrices", command=multiply).grid(row =  int(matrix2width.get()) + int(matrix1width.get()) + 3, column=2)
+    tkinter.Button(frame, text="Transpose of Matrix 1", command=transpose).grid(row =  int(matrix2width.get()) + int(matrix1width.get()) + 3, column=3)
+    tkinter.Button(frame, text="Reset Matreces", command=draw_first_window).grid(row =  int(matrix2width.get()) + int(matrix1width.get()) + 3, column=4)
     tkinter.Label(frame, text="Output:").grid(row =  int(matrix2width.get()) + int(matrix1width.get()) + 4, column=0)
     for j in range(len(outputmatrix)):
         for i in range(len(outputmatrix[j])):
@@ -71,6 +78,35 @@ def subtract():
     else:
         outputmatrix = [[tkinter.StringVar()]]
         outputmatrix[0][0].set("Dimention Mismatch")
+    draw_second_window(regenVars=False)
+
+def multiply():
+    global outputmatrix
+    outputmatrix = []
+    if(matrix1height.get()==matrix2width.get()):
+        for j in range(int(matrix2height.get())):
+            outputmatrix.append([])
+            for i in range(int(matrix1width.get())):
+                value = 0
+                for k in range(int(matrix1height.get())):
+                    value+= int(matrix1[k][i].get()) * int(matrix2[j][k].get())
+                    print(value)
+                outputmatrix[j].append(tkinter.StringVar())
+                outputmatrix[j][i].set(str(value))
+
+    else:
+        outputmatrix = [[tkinter.StringVar()]]
+        outputmatrix[0][0].set("Dimention Mismatch")
+    draw_second_window(regenVars=False)
+
+def transpose():
+    global outputmatrix
+    outputmatrix = []
+    for j in range(len(matrix1[0])):
+        outputmatrix.append([])
+        for i in range(len(matrix1)):
+            outputmatrix[j].append(tkinter.StringVar())
+            outputmatrix[j][i].set(matrix1[i][j].get())
     draw_second_window(regenVars=False)
 
 matrix1width = tkinter.StringVar()
