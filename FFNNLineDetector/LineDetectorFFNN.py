@@ -20,6 +20,7 @@ def plot():
     falsenegatives = 0
     truepositives = 0
     falsepositives = 0
+    averageaccuracy = 0
     for x in points:
         if (x.classification == True and x.truth == True):
             truepositives += 1
@@ -29,16 +30,21 @@ def plot():
             falsepositives += 1
         if (x.classification == False and x.truth == False):
             truenegatives += 1
+        averageaccuracy += 0.5 * (x.classification - x.truth) ** 2
     accuracy =(truenegatives + truepositives)/len(points)
+    averageaccuracy /= len(points)
     if (accuracy > accuracytobeat):
         bestlayer = batch
         accuracytobeat = accuracy
+
     with (open("FFNNLineDetector/ModelStats/" + str(batch) +'.txt', "w") as txt):
         txt.write("True Negatives: " + str(truenegatives) + "\n")
         txt.write("False Negatives: " + str(falsenegatives) + "\n")
         txt.write("True Positives: " + str(truepositives) + "\n")
         txt.write("False Positives: " + str(falsepositives) + "\n")
-        txt.write("Accuracy: " + str(accuracy))
+        txt.write("Accuracy: " + str(accuracy) + "\n")
+        txt.write("Average Accuracy: " + str(averageaccuracy[0]))
+
 
 def ReLu(val):
     output = numpy.zeros(val.shape[0])
