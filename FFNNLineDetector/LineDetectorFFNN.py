@@ -85,15 +85,23 @@ for batch in range(100):
     x2 = ReLu(preactivationZ2)
 
     #Run the model - z2 -> output
-    preactivationOutput = numpy.dot(z2ToOutputWeights, x2)
-    preactivationOutput = numpy.add(preactivationOutput, z2ToOutputBiases)
-    output = ReLu(preactivationOutput)
+    output = numpy.dot(z2ToOutputWeights, x2)
+    output = numpy.add(output, z2ToOutputBiases)
 
     #Evaluate and save results
     truth = 1 if inputy > (slope * inputx) + y_int else 0
     points.append(point(inputx, inputy, output, truth))
-    error = (output[0] - truth) ** 2
+    error = 0.5 * (output[0] - truth) ** 2
     plot()
     points = []
+
+    #Storing updated weights as temp vars to make sure that there is no conflict
+    #Backwards pass - output -> z2
+    lossgradient = (output[0] - truth)
+    z2ToOutputWeightsTemp = numpy.subtract(z2ToOutputWeights, learning_rate * lossgradient * ReLu(preactivationZ2))
+    z2ToOutputBiasesTemp = numpy.subtract(z2ToOutputBiases, learning_rate * lossgradient)
+
+    #Backwards pass - z1 -> z2
+    
     print("Batch " + str(batch) + " done!")
 print(bestlayer)
