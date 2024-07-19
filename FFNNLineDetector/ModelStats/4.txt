@@ -1,6 +1,6 @@
 True Negatives: 0
 False Negatives: 0
-True Positives: 0
-False Positives: 0
-Accuracy: 0.0
-Average Accuracy: 1.9594409732481297
+True Positives: 55
+False Positives: 45
+Accuracy: 0.55
+Average Accuracy: 5.909759612616638
