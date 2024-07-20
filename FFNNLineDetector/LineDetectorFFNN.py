@@ -78,11 +78,11 @@ z1ToZ2Biases = numpy.random.rand(z2LayerNeuronCount,1)
 z2ToOutputBiases = numpy.random.rand(outputLayerNeuronCount,1)
 
 #Training parameters
-learning_rate = 0.01
+learning_rate = 0.001
 #Mainloop
 for batch in range(1000):
     points = []
-    for d in range(10000):
+    for d in range(100000):
         #Set parameters for current iteration & formulate input layer
         y_int = random.random() * 400 - 200
         slope = random.random() * 20 - 10
