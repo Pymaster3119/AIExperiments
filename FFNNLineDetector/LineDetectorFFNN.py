@@ -55,16 +55,16 @@ def relu_derivative(x):
 
 def save_model():
     global inputLayerToZ1Weights, z1ToZ2Weights, z2ToOutputWeights, inputLayerToZ1Biases, z1ToZ2Biases, z2ToOutputBiases, batch
-    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " inputToZ1Weights.txt", inputLayerToZ1Weights)
-    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " z1ToZ2Weights.txt", z1ToZ2Weights)
-    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " z2ToOutputWeights.txt", z2ToOutputWeights)
-    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " inputToZ1Biases.txt", inputLayerToZ1Biases)
-    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " z1ToZ2Biases.txt", z1ToZ2Biases)
-    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " z2ToOutputBiases.txt", z2ToOutputBiases)
+    numpy.save("FFNNLineDetector/ModelSaves/" + str(batch) + " inputToZ1Weights.npy", inputLayerToZ1Weights)
+    numpy.save("FFNNLineDetector/ModelSaves/" + str(batch) + " z1ToZ2Weights.npy", z1ToZ2Weights)
+    numpy.save("FFNNLineDetector/ModelSaves/" + str(batch) + " z2ToOutputWeights.npy", z2ToOutputWeights)
+    numpy.save("FFNNLineDetector/ModelSaves/" + str(batch) + " inputToZ1Biases.npy", inputLayerToZ1Biases)
+    numpy.save("FFNNLineDetector/ModelSaves/" + str(batch) + " z1ToZ2Biases.npy", z1ToZ2Biases)
+    numpy.save("FFNNLineDetector/ModelSaves/" + str(batch) + " z2ToOutputBiases.npy", z2ToOutputBiases)
 #Set up layers
 inputLayerNeuronCount = 4
-z1LayerNeuronCount = 5
-z2LayerNeuronCount = 5
+z1LayerNeuronCount = 10
+z2LayerNeuronCount = 10
 outputLayerNeuronCount = 1
 
 #Initialize weights
@@ -78,7 +78,7 @@ z1ToZ2Biases = numpy.random.rand(z2LayerNeuronCount,1)
 z2ToOutputBiases = numpy.random.rand(outputLayerNeuronCount,1)
 
 #Training parameters
-learning_rate = 0.05
+learning_rate = 0.01
 #Mainloop
 for batch in range(1000):
     points = []

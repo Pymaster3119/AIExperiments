@@ -33,12 +33,12 @@ def ReLu(val):
 
 def create_points(numPoints, runDraw = False):
     #Import the model
-    inputLayerToZ1Weights = np.loadtxt("FFNNLineDetector/ModelSaves/" + selected.get() + " inputToZ1Weights.txt")
-    z1ToZ2Weights = np.loadtxt("FFNNLineDetector/ModelSaves/" + selected.get() + " z1ToZ2Weights.txt")
-    z2ToOutputWeights = np.loadtxt("FFNNLineDetector/ModelSaves/" + selected.get() + " z2ToOutputWeights.txt")
-    inputLayerToZ1Biases = np.loadtxt("FFNNLineDetector/ModelSaves/" + selected.get() + " inputToZ1Biases.txt")
-    z1ToZ2Biases = np.loadtxt("FFNNLineDetector/ModelSaves/" + selected.get() + " z1ToZ2Biases.txt")
-    z2ToOutputBiases = np.loadtxt("FFNNLineDetector/ModelSaves/" + selected.get() + " z2ToOutputBiases.txt")
+    inputLayerToZ1Weights = np.load("FFNNLineDetector/ModelSaves/" + selected.get() + " inputToZ1Weights.npy")
+    z1ToZ2Weights = np.load("FFNNLineDetector/ModelSaves/" + selected.get() + " z1ToZ2Weights.npy")
+    z2ToOutputWeights = np.load("FFNNLineDetector/ModelSaves/" + selected.get() + " z2ToOutputWeights.npy")
+    inputLayerToZ1Biases = np.load("FFNNLineDetector/ModelSaves/" + selected.get() + " inputToZ1Biases.npy")
+    z1ToZ2Biases = np.load("FFNNLineDetector/ModelSaves/" + selected.get() + " z1ToZ2Biases.npy")
+    z2ToOutputBiases = np.load("FFNNLineDetector/ModelSaves/" + selected.get() + " z2ToOutputBiases.npy")
 
     #Create the points & run FFNN on all of them
     for x in range(numPoints):
