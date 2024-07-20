@@ -52,6 +52,15 @@ def ReLu(val):
 
 def relu_derivative(x):
     return numpy.where((x > 0) & (x < 1), 1, 0)
+
+def save_model():
+    global inputLayerToZ1Weights, z1ToZ2Weights, z2ToOutputWeights, inputLayerToZ1Biases, z1ToZ2Biases, z2ToOutputBiases, batch
+    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " inputToZ1Weights.txt", inputLayerToZ1Weights)
+    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " z1ToZ2Weights.txt", z1ToZ2Weights)
+    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " z2ToOutputWeights.txt", z2ToOutputWeights)
+    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " inputToZ1Biases.txt", inputLayerToZ1Biases)
+    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " z1ToZ2Biases.txt", z1ToZ2Biases)
+    numpy.savetxt("FFNNLineDetector/ModelSaves/" + str(batch) + " z2ToOutputBiases.txt", z2ToOutputBiases)
 #Set up layers
 inputLayerNeuronCount = 4
 z1LayerNeuronCount = 5
@@ -69,11 +78,11 @@ z1ToZ2Biases = numpy.random.rand(z2LayerNeuronCount,1)
 z2ToOutputBiases = numpy.random.rand(outputLayerNeuronCount,1)
 
 #Training parameters
-learning_rate = 0.001
+learning_rate = 0.0001
 #Mainloop
 for batch in range(1000):
     points = []
-    for d in range(1000):
+    for d in range(10000):
         #Set parameters for current iteration & formulate input layer
         y_int = random.random() * 400 - 200
         slope = random.random() * 20 - 10
@@ -108,8 +117,8 @@ for batch in range(1000):
         z2ToOutputBiasesTemp = z2ToOutputBiases - learning_rate * lossgradient
 
         #Backwards pass - z2 -> z1
-        gradientz2 = lossgradient * z2ToOutputWeights.T * relu_derivative(preactivationZ2)  # <---- Corrected gradient calculation
-        z1ToZ2WeightsTemp = z1ToZ2Weights - learning_rate * numpy.dot(gradientz2, x1.T)  # <---- Corrected gradient calculation
+        gradientz2 = lossgradient * z2ToOutputWeights.T * relu_derivative(preactivationZ2)
+        z1ToZ2WeightsTemp = z1ToZ2Weights - learning_rate * numpy.dot(gradientz2, x1.T) 
         z1ToZ2BiasesTemp = z1ToZ2Biases - learning_rate * gradientz2
         
 
@@ -128,5 +137,6 @@ for batch in range(1000):
 
         
     print("Batch " + str(batch) + " done!")
+    save_model()
     plot()
 print(bestlayer)
