@@ -31,7 +31,7 @@ def plot():
             falsepositives += 1
         if (x.classification[0,0] < 0.5 and x.truth == False):
             truenegatives += 1
-        averageaccuracy += 0.5 * (x.classification[0,0] - x.truth) ** 2
+        averageaccuracy += (x.classification[0,0] - x.truth) ** 2
     accuracy =(truenegatives + truepositives)/len(points)
     averageaccuracy /= len(points)
     if (averageaccuracy < accuracytobeat):
@@ -63,8 +63,8 @@ def save_model():
     numpy.save("FFNNLineDetector/ModelSaves/" + str(batch) + " z2ToOutputBiases.npy", z2ToOutputBiases)
 #Set up layers
 inputLayerNeuronCount = 4
-z1LayerNeuronCount = 10
-z2LayerNeuronCount = 10
+z1LayerNeuronCount = 30
+z2LayerNeuronCount = 30
 outputLayerNeuronCount = 1
 
 #Initialize weights
@@ -108,11 +108,11 @@ for batch in range(1000):
         #Evaluate and save results
         truth = 1 if inputy > (slope * inputx) + y_int else 0
         points.append(point(inputx, inputy, output, truth))
-        error = 0.5 * (output[0, 0] - truth) ** 2
+        error = (output[0, 0] - truth)
 
         #Storing updated weights as temp vars to make sure that there is no conflict
         #Backwards pass - output -> z2
-        lossgradient = (output[0, 0] - truth)
+        lossgradient = 2 * (output[0, 0] - truth)
         z2ToOutputWeightsTemp = z2ToOutputWeights - learning_rate * lossgradient * x2.T
         z2ToOutputBiasesTemp = z2ToOutputBiases - learning_rate * lossgradient
 
