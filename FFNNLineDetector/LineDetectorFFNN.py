@@ -78,7 +78,7 @@ z1ToZ2Biases = numpy.random.rand(z2LayerNeuronCount,1)
 z2ToOutputBiases = numpy.random.rand(outputLayerNeuronCount,1)
 
 #Training parameters
-learning_rate = 0.0001
+learning_rate = 0.005
 #Mainloop
 for batch in range(1000):
     points = []
