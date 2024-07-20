@@ -19,7 +19,7 @@ dropdown = tkinter.OptionMenu(frame, selected, *options)
 dropdown.grid(row=1, column=1)
 canvas = tkinter.Canvas(frame, width=1000, height=1000)
 canvas.grid(row=0, column=0, columnspan=2)
-button = tkinter.Button(frame, text="Make a large batch", command= lambda :create_points(1000,runDraw=True))
+button = tkinter.Button(frame, text="Make a large batch", command= lambda :create_points(10000,runDraw=True))
 button.grid(row=1, column=2)
 points = []
 class point:
@@ -58,7 +58,9 @@ def create_points(numPoints, runDraw = False):
 
         #Run the model - z2 -> output
         output = np.dot(z2ToOutputWeights, x2)
+        print(z2ToOutputWeights.shape, x2.shape)
         output = np.add(output, z2ToOutputBiases)
+        print(output.shape)
         
         #Save point
         points.append(point(inputx, inputy, (output-0.5) * 2))
