@@ -72,7 +72,7 @@ z1ToZ2Biases = numpy.random.rand(z2LayerNeuronCount)
 z2ToOutputBiases = numpy.random.rand(outputLayerNeuronCount)
 
 #Training parameters
-learning_rate = 0.125
+learning_rate = 0.01
 #Mainloop
 for batch in range(100):
     points = []
@@ -111,12 +111,15 @@ for batch in range(100):
         z2ToOutputBiasesTemp = numpy.subtract(z2ToOutputBiases, learning_rate * lossgradient)
 
         #Backwards pass - z2 -> z1
-        z1ToZ2WeightsChange = numpy.dot(numpy.dot(lossgradient, z2ToOutputWeights.T) * relu_derivative(preactivationZ2),x1)
+        gradientz2 = numpy.dot(lossgradient, z2ToOutputWeights) * relu_derivative(preactivationZ2)
+        z2delta = numpy.dot(lossgradient, z2ToOutputWeights.T) * relu_derivative(preactivationZ2)
+        z1ToZ2WeightsChange = numpy.dot(z2delta,x1)
         z1ToZ2BiasChange = numpy.dot(lossgradient, z2ToOutputWeights.T) * relu_derivative(preactivationZ2)
         z1ToZ2WeightsTemp = numpy.subtract(z1ToZ2Weights, learning_rate * z1ToZ2WeightsChange)
         z1ToZ2BiasesTemp = numpy.subtract(z1ToZ2Biases, learning_rate * z1ToZ2BiasChange)
 
         #Backwards pass - input -> z1
+        
         inputLayerToZ1WeightsChange = numpy.dot(z1ToZ2Weights.T, numpy.dot(lossgradient, z2ToOutputWeights.T) * relu_derivative(preactivationZ2)) * relu_derivative(preactivationZ1)
         inputLayerToZ1WeightsDelta = numpy.dot(inputLayerToZ1WeightsChange, inputlayer.T)
         inputLayerToZ1BiasesDelta = numpy.sum(inputlayer, axis=1, keepdims=True)
