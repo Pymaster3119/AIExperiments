@@ -12,7 +12,7 @@ yint = tkinter.IntVar(frame)
 slope = tkinter.IntVar(frame)
 slider = tkinter.Scale(frame, variable=yint, from_=-200, to=200, orient="horizontal", label="y-intercept")
 slider.grid(row=1, column=0)
-tkinter.Scale(frame, variable=slope, from_=-10, to=10, orient="horizontal", label= "slope").grid(row=2, column=0)
+tkinter.Scale(frame, variable=slope, from_=0, to=20, orient="horizontal", label= "slope").grid(row=2, column=0)
 selected = tkinter.StringVar(frame)
 options = [x for x in range(1000)]
 dropdown = tkinter.OptionMenu(frame, selected, *options)

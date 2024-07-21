@@ -85,7 +85,7 @@ for batch in range(1000):
     for d in range(100000):
         #Set parameters for current iteration & formulate input layer
         y_int = random.random() * 400 - 200
-        slope = random.random() * 20 - 10
+        slope = random.random() * 20
         inputx=random.random() * 100
         inputy=random.random() * 100
         inputlayer = numpy.array([[y_int], [slope], [inputx], [inputy]])
