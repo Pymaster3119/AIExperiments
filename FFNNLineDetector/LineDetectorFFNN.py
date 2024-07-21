@@ -63,8 +63,8 @@ def save_model():
     numpy.save("FFNNLineDetector/ModelSaves/" + str(batch) + " z2ToOutputBiases.npy", z2ToOutputBiases)
 #Set up layers
 inputLayerNeuronCount = 4
-z1LayerNeuronCount = 30
-z2LayerNeuronCount = 30
+z1LayerNeuronCount = 50
+z2LayerNeuronCount = 50
 outputLayerNeuronCount = 1
 
 #Initialize weights
