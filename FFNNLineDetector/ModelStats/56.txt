@@ -1,6 +1,6 @@
-True Negatives: 82766
-False Negatives: 3306
-True Positives: 11908
-False Positives: 2020
-Accuracy: 0.94674
-Average Accuracy: 0.04204827399757008
+True Negatives: 82081
+False Negatives: 2168
+True Positives: 12897
+False Positives: 2854
+Accuracy: 0.94978
+Average Accuracy: 0.038184581695813055
