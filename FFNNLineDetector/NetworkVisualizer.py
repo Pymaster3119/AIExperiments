@@ -14,7 +14,7 @@ slider = tkinter.Scale(frame, variable=yint, from_=-200, to=200, orient="horizon
 slider.grid(row=1, column=0)
 tkinter.Scale(frame, variable=slope, from_=0, to=20, orient="horizontal", label= "slope").grid(row=2, column=0)
 selected = tkinter.StringVar(frame)
-options = [x for x in range(1000)]
+options = [x for x in range(5000)]
 dropdown = tkinter.OptionMenu(frame, selected, *options)
 dropdown.grid(row=1, column=1)
 canvas = tkinter.Canvas(frame, width=1000, height=1000)
