@@ -48,10 +48,11 @@ def plot():
 
 
 def ReLu(val):
-    return numpy.maximum(0, numpy.minimum(1, val))
+    return 1 / (1 + numpy.exp(-val))
 
 def relu_derivative(x):
-    return numpy.where((x > 0) & (x < 1), 1, 0)
+    sig = ReLu(x)
+    return sig * (1 - sig)
 
 def save_model():
     global inputLayerToZ1Weights, z1ToZ2Weights, z2ToOutputWeights, inputLayerToZ1Biases, z1ToZ2Biases, z2ToOutputBiases, batch
